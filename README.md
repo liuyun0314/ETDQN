@@ -3,8 +3,9 @@ This repository is for the paper "Evolutionary Trainer-based Deep Q-Network for 
 
 # Requirements
 - Python 3.9.
-- NumPy
+- numPy
 - Pytorch
+- networkx
 
 # Run
 - Run GA_traniner.py to perform the training process with GA.
