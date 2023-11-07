@@ -4,7 +4,7 @@ class Machine():
 
     def __init__(self, aName,time):
         self.name = aName
-        self.currentTime = time     # 记录机器处理完一项操作的完成时间，初始时为0
+        self.currentTime = time    
         self.assignedOpera = []
         self.running = 1
 
