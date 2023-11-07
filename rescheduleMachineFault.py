@@ -229,38 +229,6 @@ def reset_seed(seed):
     random.seed(seed)
     torch.backends.cudnn.deterministic = True
 
-if __name__ == '__main__':
-
-    allJobsList = []
-    allMachinesList = []
-    # dispatchingRules = ['policy_DQN', 'policy_DQN2', 'policy_DDQN', 'policy_DuelingDQN', 'RA', 'policy_QNGA', 'policy_QNGA',
-    #                     'randomSolution', 'algorithmSPT', 'algorithmLPT', 'algorithmFOPNR', 'algorithmMORPNR', 'algorithmSR', 'algorithmLR']
-    # dispatchingRules = ['randomSolution', 'algorithmSPT', 'algorithmLPT', 'algorithmFOPNR', 'algorithmMORPNR',
-    #                     'algorithmSR', 'algorithmLR', 'RA']
-    # dispatchingRules = ['policy_DDQN', 'policy_DuelingDQN', 'RA', 'policy_QNGA']
-    dispatchingRules = ['GP_rule1', 'GP_rule2']
-
-    # dispatchingRules = ['randomSolution', 'RA']
-    # dispatchingRules = ['QNGA']
-
-    randon_job_num = 2000
-    random_machine_num = 10
-    max_process_time = 100
-    max_operation_num = 10
-
-    all_instances_name = []
-    valid_machineList = []
-    valid_jobsList = []
-    machineList, jobsList = instance_generator(randon_job_num, random_machine_num, max_process_time, max_operation_num)
-    valid_machineList.append(machineList)
-    valid_jobsList.append(jobsList)
-    valid_job_num = 1
-    # nInsertJob = len(inser_operation)
-    dataName = 'random_instance(' + str(randon_job_num) + '*' + str(random_machine_num) + ')'
-    all_instances_name.append(dataName)
-    for jobsList, machinesList in zip(valid_jobsList, valid_machineList):
-            all_timeCost, instance_name, run_times = largerScale_instance_comparison(jobsList, machinesList,
-                                                                                         dispatchingRules)
 
         
         
