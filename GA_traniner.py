@@ -32,7 +32,7 @@ class GA(torch.nn.Module):
        self.idel_machine = []
        self.candidate_queue = {}
 
-    def caculate_fitness(self, X, t):
+    def caculate_fitness(self, machinesList, X, t, r):
         idel_machine = deepcopy(self.idel_machine)
         incoming_operation = []
         for j in range(self.dim):
@@ -47,10 +47,12 @@ class GA(torch.nn.Module):
                 idel_machine[j].assignedOpera.append(candidate_operation)
                 idel_machine[j].currentTime = candidate_operation.endTime
                 incoming_operation.append(candidate_operation)
-        fitness = CaculateTimeCost(idel_machine)
+        # fitness = CaculateTimeCost(idel_machine)
+        allProceTime = CaculateTimeCost(machinesList)
+        fitness = r + gamma * (EP / (len(machinesList) * allProceTime))
         return fitness
 
-    def GA_trainer(self, b_s_):
+    def GA_trainer(self, b_s_, b_r):
         self.idel_machine = []
         self.candidate_queue = {}
         jobsList = b_s_['jobs']
@@ -142,7 +144,7 @@ class GA(torch.nn.Module):
             while t <= self.maxFEs:
                 t += 1
                 for i in range(self.N):
-                    fitness[0,i] = self.caculate_fitness(X[i, :], step_t)
+                    fitness[0,i] = self.caculate_fitness(machinesList, X[i, :], step_t, b_r)
                     if fitness[0,i] < bestf:
                         bestf = fitness[0,i]
                         bestP = X[i, :]
@@ -285,7 +287,7 @@ class QNGA(object):
                     process = False
                     break
             if process:
-                target_reward, _, _, _, _ = self.GA_trainer(s_)
+                target_reward, _, _, _, _ = self.GA_trainer(s_, b_r)
                 self.store_state_reward(s_, target_reward)
             results_eval.append(b_r)
             results_target.append(target_reward)
